@@ -48,6 +48,13 @@ const routes = [
         component: StockList,
         layout: "/admin",
       },
+		{
+        path: "/StockList",
+        name: "StockList",
+        mini: "S",
+        component: StockList,
+        layout: "/admin",
+      },
     ],
   },
   {
