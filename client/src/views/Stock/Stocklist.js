@@ -59,17 +59,20 @@ const dataTable = [
   ["Olivia Liang", "Support Engineer", "Singapore", "64"],
 ];
 
-class ReactTables extends React.Component {
+class StocklistTables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: dataTable.map((prop, key) => {
         return {
-          id: key,
-          name: prop[0],
-          position: prop[1],
-          office: prop[2],
-          age: prop[3],
+          customers: '',  
+          completed: 0 ,
+          searchKeyword: '',
+          // id: key,
+          // name: prop[0],
+          // position: prop[1],
+          // office: prop[2],
+          // age: prop[3],
           actions: (
             // we've added some custom button actions
             <div className="actions-right">
@@ -144,7 +147,45 @@ class ReactTables extends React.Component {
         };
       }),
     };
+    this.stateRefresh = this.stateRefresh.bind(this);  
+    this.handleValueChange = this.handleValueChange.bind(this);
   }
+
+  stateRefresh() {  
+    this.setState({ 
+      customers: '', 
+      completed: 0,
+      searchKeyword : ''
+    }); 
+    this.callApi()
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
+  }
+
+  componentDidMount(){
+    this.timer = setInterval(this.progress, 20); /* progress 0.02초마다 */
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err)); 
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customer');
+    const body = await response.json();
+    return body;
+  }
+  
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+  };
+
+  handleValueChange(e) {
+    let nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
+  }
+
   render() {
     return (
       <>
@@ -153,7 +194,7 @@ class ReactTables extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">React-Tables</CardTitle>
+                  <CardTitle tag="h4">Stock List</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <ReactTable
@@ -197,4 +238,4 @@ class ReactTables extends React.Component {
   }
 }
 
-export default ReactTables;
+export default StocklistTables;
