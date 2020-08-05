@@ -1,6 +1,6 @@
 import React from "react";
 
-import Customer from './components/Customer'
+// import Customer from './components/Customer'
 
 
 // reactstrap components
@@ -190,16 +190,16 @@ class StocklistTables extends React.Component {
   }
 
   render() {
-    const filteredComponents = (data) => {
-      data = data.filter((c) => {
-      return c.name.indexOf(this.state.searchKeyword) > -1;
-      });
-      return data.map((c) => {
-      return <Customer stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />
-      });
-  }
-  const { classes} = this.props;
-  const cellList =["No.","Image","Name","Birthday","Gender","Department"]
+  //   const filteredComponents = (data) => {
+  //     data = data.filter((c) => {
+  //     return c.name.indexOf(this.state.searchKeyword) > -1;
+  //     });
+  //     return data.map((c) => {
+  //     return <Customer stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />
+  //     });
+  // }
+  // const { classes} = this.props;
+  // const cellList =["No.","Image","Name","Birthday","Gender","Department"]
 
     return (
       <>
