@@ -26,8 +26,29 @@ import Widgets from "views/Widgets.js";
 import Wizard from "views/forms/Wizard.js";
 // ADD MES
 import StockList from "views/Stock/Stocklist"
+import SdInformationList from "views/SdInformation/SdInformationlist"
 
 const routes = [
+
+
+
+  {
+    collapse: true,
+    name: "기준정보관리",
+    icon: "nc-icon nc-book-bookmark",
+    state: "sdinformationCollapse",
+    views: [
+      {
+        path: "/SdInformationList",
+        name: "기준정보조회",
+        mini: "S",
+        component: SdInformationList,
+        layout: "/admin",
+      },
+
+    ],
+  },
+
   {
     path: "/dashboard",
     name: "Dashboard",
