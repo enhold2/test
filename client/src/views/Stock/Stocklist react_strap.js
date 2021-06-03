@@ -14,7 +14,7 @@ class ProductList extends React.Component {
 
   componentDidMount() {
     // const apiUrl = 'http://localhost/dev/tcxapp/reactapi/products';
-    const apiUrl = '/admin/api/st';
+    const apiUrl = 'api/st';
 
     fetch(apiUrl)
       .then(res => res.json())
@@ -34,7 +34,7 @@ class ProductList extends React.Component {
     const { products } = this.state;
 
     // const apiUrl = 'http://localhost/dev/tcxapp/reactapi/deleteProduct';
-    const apiUrl = '/admin/api/st';
+    const apiUrl = 'api/st';
 
     const formData = new FormData();
     formData.append('productId', productId);

@@ -7,9 +7,9 @@ const fs = require('fs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/* app.get('/api/hello', (req, res) => {
+ app.get('/api/hello', (req, res) => {
     res.send({message: 'Hello Express!'});
-}); */
+}); 
 
 const data = fs.readFileSync('./database.json');
 const conf = JSON.parse(data);
@@ -27,7 +27,7 @@ connection.connect();
 const multer = require('multer');
 const upload = multer({dest:'./upload'})
 
-app.get('/api/customer', (req, res) => {
+app.get('/admin/api/st', (req, res) => {
     connection.query(
         'SELECT * FROM CUSTOMER WHERE isDeleted =0',
         (err, rows, fields) => {
@@ -63,7 +63,7 @@ app.post('/api/customer', upload.single('image'), (req, res) => {
     )
 });
 
-app.delete('/api/customer/:id', (req, res) => {
+app.delete('/api/concurrently --kill-others-on-fail/:id', (req, res) => {
     let sql = 'UPDATE CUSTOMER SET isDeleted = 1 WHERE id = ?';
     let params = [req.params.id];
     connection.query(sql, params,

@@ -1,4 +1,5 @@
 import React from "react";
+import Customer from './components/Customer'
 
 // reactstrap components
 import {
@@ -59,18 +60,20 @@ const dataTable = [
   ["Olivia Liang", "Support Engineer", "Singapore", "64"],
 ];
 
-class ReactTables extends React.Component {
+class StocklistTables extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       data: dataTable.map((prop, key) => {
         return {
-          id: key,
-          name: prop[0],
-          position: prop[1],
-          office: prop[2],
-          age: prop[3],
+          customers: '',  
+          completed: 0 ,
+          searchKeyword: '',
+          // id: key,
+          // name: prop[0],
+          // position: prop[1],
+          // office: prop[2],
+          // age: prop[3],
           actions: (
             // we've added some custom button actions
             <div className="actions-right">
@@ -145,8 +148,65 @@ class ReactTables extends React.Component {
         };
       }),
     };
+    this.stateRefresh = this.stateRefresh.bind(this);  
+    this.handleValueChange = this.handleValueChange.bind(this);
   }
+
+  stateRefresh() {  
+    this.setState({ 
+      customers: '', 
+      completed: 0,
+      searchKeyword : ''
+    }); 
+    this.callApi()
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
+  }
+
+  componentDidMount(){
+    this.timer = setInterval(this.progress, 20); /* progress 0.02초마다 */
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err)); 
+  }
+
+  callApi = async () => {
+    try{
+    const response = await fetch('/api/customer/a');
+    // const response = await fetch('http://localhost:5000/api/customer');
+
+    const body = await response.json();
+    console.log('callApi');
+    if (response.status !== 200) throw Error(body.message);
+    return body;
+  }catch (error) {
+    alert(error)
+  }
+  };
+  
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+  };
+
+  handleValueChange(e) {
+    let nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
+  }
+
   render() {
+    const filteredComponents = (data) => {
+      data = data.filter((c) => {
+      return c.name.indexOf(this.state.searchKeyword) > -1;
+      });
+      return data.map((c) => {
+      return <Customer stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />
+      });
+  }
+  const { classes} = this.props;
+  const cellList =["No.","Image","Name","Birthday","Gender","Department"]
+
     return (
       <>
         <div className="content">
@@ -154,26 +214,36 @@ class ReactTables extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">React-Tables</CardTitle>
+                  <CardTitle tag="h4">Stock List</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <ReactTable
                     data={this.state.data}
                     columns={[
                       {
+                        Header: "Code",
+                        // accessor: "name",
+                      },
+                      {
+                        Header: "이미지",
+                        // accessor: "name",
+                        sortable: false,
+                        filterable: false,
+                      },
+                      {
                         Header: "Name",
-                        accessor: "name",
+                        accessor: "Name",
                       },
                       {
                         Header: "Position",
-                        accessor: "position",
+                        accessor: "Birthday",
                       },
                       {
-                        Header: "Office",
+                        Header: "Stock",
                         accessor: "office",
                       },
                       {
-                        Header: "Age",
+                        Header: "Stock.Date",
                         accessor: "age",
                       },
                       {
@@ -198,4 +268,4 @@ class ReactTables extends React.Component {
   }
 }
 
-export default ReactTables;
+export default StocklistTables;

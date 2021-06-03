@@ -13,9 +13,10 @@ import {
 
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
+import axios from "axios";
 
 const dataTable = [
-  ["Tiger Nixon", "System Architect", "Edinburgh", "61"],
+  ["Tiger Nixon", "System Architect", "Edinburgh", "61", "5"],
   ["Garrett Winters", "Accountant", "Tokyo", "63"],
   ["Ashton Cox", "Junior Technical Author", "San Francisco", "66"],
   ["Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "22"],
@@ -59,93 +60,84 @@ const dataTable = [
   ["Olivia Liang", "Support Engineer", "Singapore", "64"],
 ];
 
+
 class ReactTables extends React.Component {
+
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       data: dataTable.map((prop, key) => {
         return {
           id: key,
           name: prop[0],
-          position: prop[1],
-          office: prop[2],
-          age: prop[3],
-          actions: (
-            // we've added some custom button actions
-            <div className="actions-right">
-              {/* use this button to add a like kind of action */}
-              <Button
-                onClick={() => {
-                  let obj = this.state.data.find((o) => o.id === key);
-                  alert(
-                    "You've clicked LIKE button on \n{ \nName: " +
-                      obj.name +
-                      ", \nposition: " +
-                      obj.position +
-                      ", \noffice: " +
-                      obj.office +
-                      ", \nage: " +
-                      obj.age +
-                      "\n}."
-                  );
-                }}
-                color="info"
-                size="sm"
-                className="btn-icon btn-link like"
-              >
-                <i className="fa fa-heart" />
-              </Button>{" "}
-              {/* use this button to add a edit kind of action */}
-              <Button
-                onClick={() => {
-                  let obj = this.state.data.find((o) => o.id === key);
-                  alert(
-                    "You've clicked EDIT button on \n{ \nName: " +
-                      obj.name +
-                      ", \nposition: " +
-                      obj.position +
-                      ", \noffice: " +
-                      obj.office +
-                      ", \nage: " +
-                      obj.age +
-                      "\n}."
-                  );
-                }}
-                color="warning"
-                size="sm"
-                className="btn-icon btn-link edit"
-              >
-                <i className="fa fa-edit" />
-              </Button>{" "}
-              {/* use this button to remove the data row */}
-              <Button
-                onClick={() => {
-                  var data = this.state.data;
-                  data.find((o, i) => {
-                    if (o.id === key) {
-                      // here you should add some custom code so you can delete the data
-                      // from this component and from your server as well
-                      data.splice(i, 1);
-                      console.log(data);
-                      return true;
-                    }
-                    return false;
-                  });
-                  this.setState({ data: data });
-                }}
-                color="danger"
-                size="sm"
-                className="btn-icon btn-link remove"
-              >
-                <i className="fa fa-times" />
-              </Button>{" "}
-            </div>
-          ),
+          // position: prop[1],
+          // office: prop[2],
+          // age: prop[3],
+          // sd : prop[4],
+          customers: '',  
+          completed: 0 ,
+          searchKeyword: '',
+          
         };
       }),
     };
   }
+
+  // constructor(props) {
+  //   super(props);
+  //   this.state.customers.map = {  
+  //     customers: '',  
+  //     completed: 0 ,
+  //     searchKeyword: ''
+  //   }}
+
+  // constructor(props){
+  //   super(props);
+  //   this.state= { datalist:[]};
+  //   // this.state.customers
+  // }
+
+  stateRefresh() {  
+    this.setState({ 
+      customers: '', 
+      completed: 0,
+      searchKeyword : ''
+    }); 
+    this.callApi()
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
+  }
+
+  componentDidMount(){
+    this.timer = setInterval(this.progress, 20); /* progress 0.02초마다 */
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err));  
+  }
+
+  // componentDidMount(){
+  //   this.callApi()
+  //   .then(res => this.setState({data: res}))
+  //   console.log(this.state.data);
+  // }
+
+
+  callApi = async () => {
+    try{
+    const response = await fetch('/api/st');
+    const body = await response.json();
+    this.setState({ data : response.body})
+    console.log(body);
+
+    if (response.status !== 200) throw Error(body.message);
+    return body;
+  }catch (error) {
+    alert(error)
+  }
+  };
+  
+
+  
   render() {
     return (
       <>
@@ -159,6 +151,7 @@ class ReactTables extends React.Component {
                 <CardBody>
                   <ReactTable
                     data={this.state.data}
+
                     columns={[
                       {
                         Header: "Name",
@@ -175,6 +168,10 @@ class ReactTables extends React.Component {
                       {
                         Header: "Age",
                         accessor: "age",
+                      },
+                      {
+                        Header: "4",
+                        accessor: "sd",
                       },
                       {
                         Header: "Actions",

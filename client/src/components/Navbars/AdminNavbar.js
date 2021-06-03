@@ -107,7 +107,7 @@ class AdminNavbar extends React.Component {
               </div>
               <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
                 <span className="d-none d-md-block">
-                  Busience MES Dashboard
+                  Busience MES test
                 </span>
                 <span className="d-block d-md-none">PD PRO React</span>
               </NavbarBrand>

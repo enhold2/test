@@ -25,7 +25,11 @@ import VectorMap from "views/maps/VectorMap.js";
 import Widgets from "views/Widgets.js";
 import Wizard from "views/forms/Wizard.js";
 // ADD MES
+// import StockList from "views/Stock/App"
 import StockList from "views/Stock/Stocklist"
+import testList from "views/Stock/App"
+import treeview from "views/TreeDatatest/tree"
+
 import SdInformationList from "views/SdInformation/SdInformationlist"
 
 const routes = [
@@ -42,7 +46,7 @@ const routes = [
         path: "/SdInformationList",
         name: "기준정보조회",
         mini: "S",
-        component: SdInformationList,
+        component: treeview,
         layout: "/admin",
       },
 
@@ -69,13 +73,15 @@ const routes = [
         component: StockList,
         layout: "/admin",
       },
-		{
-        path: "/StockList",
-        name: "StockList",
-        mini: "S",
-        component: StockList,
+      {
+        path: "/testlist",
+        name: "TestList",
+        mini: "T.L",
+        component: testList,
         layout: "/admin",
-      },
+      }
+
+
     ],
   },
   {

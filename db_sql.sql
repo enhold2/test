@@ -1,0 +1,14 @@
+USE management;
+
+CREATE TABLE PRODUCT (
+
+	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	image VARCHAR(1024),
+	P_number VARCHAR(10),
+	P_name VARCHAR(8),
+	
+	createdDate DATETIME,
+	isDeleted INT
+
+) 
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

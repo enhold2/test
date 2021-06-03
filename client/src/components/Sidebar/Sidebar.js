@@ -4,7 +4,7 @@ import { Nav, Collapse } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import avatar from "assets/img/faces/578211-gettyimages-542930526.jpg";
+import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/react-logo.png";
 
 var ps;
@@ -138,7 +138,7 @@ class Sidebar extends React.Component {
       >
         <div className="logo">
           <a
-            href="http://www.busience.com"
+            href="https://raon.enhold2.com/"
             className="simple-text logo-mini"
           >
             <div className="logo-img">
@@ -146,10 +146,10 @@ class Sidebar extends React.Component {
             </div>
           </a>
           <a
-            href="http://www.busience.com"
+            href="https://raon.enhold2.com/"
             className="simple-text logo-normal"
           >
-            BUSIENCE MES
+            Urban Cloud Garden
           </a>
         </div>
 

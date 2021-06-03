@@ -62,7 +62,7 @@ class AuthNavbar extends React.Component {
         <Container>
           <div className="navbar-wrapper">
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-              Busience MES Dashboard
+              Busience MES test
             </NavbarBrand>
           </div>
           <button
